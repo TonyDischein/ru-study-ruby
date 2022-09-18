@@ -2,9 +2,10 @@ module Exercise
   module Arrays
     class << self
       def replace(array)
-        max_value = array.reduce { |max, current| max < current ? current : max }
+        max_value = 0
 
-        array.map { |item| item.positive? ? max_value : item }
+        array.each { |item| max_value = item if max_value < item } \
+             .map { |item| item.positive? ? max_value : item }
       end
 
       def search(array, query, left = 0, right = nil)

@@ -8,12 +8,11 @@ module Exercise
              .map { |item| item.positive? ? max_value : item }
       end
 
-      def search(array, query, left = 0, right = nil)
-        right = array.size - 1 if right.nil?
-        return -1 if left > right
+      def search(array, query, left = 0, right = array.size - 1)
+        return -1 unless array.include?(query)
 
         mid = (left + ((right - left) / 2)).to_i
-        unless array[mid] == query
+        if array[mid] != query
           left, right = array[mid] < query ? [mid + 1, right] : [left, mid - 1]
           return search(array, query, left, right)
         end

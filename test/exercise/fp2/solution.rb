@@ -15,7 +15,7 @@ module Exercise
 
       # Написать свою функцию my_map
       def my_map
-        my_reduce(MyArray.new) { |acc, current| acc << yield(current) }
+        my_reduce(self.class.new) { |acc, current| acc << yield(current) }
       end
 
       # Написать свою функцию my_compact

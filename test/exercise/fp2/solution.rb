@@ -7,7 +7,7 @@ module Exercise
       # Написать свою функцию my_each
       def my_each(item = 0, &func)
         unless self[item].nil?
-          func.call self[item]
+          yield(self[item])
           my_each(item + 1, &func)
         end
         self

@@ -9,7 +9,7 @@ module Exercise
       end
 
       def search(array, query, left = 0, right = array.size - 1)
-        return -1 unless array.include?(query)
+        return -1 if left > right
 
         mid = (left + ((right - left) / 2)).to_i
         if array[mid] != query

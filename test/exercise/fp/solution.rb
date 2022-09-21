@@ -5,8 +5,8 @@ module Exercise
       # film["name"], film["rating_kinopoisk"], film["rating_imdb"],
       # film["genres"], film["year"], film["access_level"], film["country"]
       def rating(array)
-        films = array.select { |film|  more_two_country?(film) && rating_kinopoisk_positiv?(film) }
-        films_rating = films.map { |film| only_rating(film) }
+        films = array.select { |film|  more_two_country?(film) && rating_positiv?(film) }
+        films_rating = films.map { |film| get_rating(film) }
         films_rating.reduce { |sum, item| sum + item } / films.count
       end
 
@@ -29,11 +29,11 @@ module Exercise
         film['country'].split(',').size >= 2 unless film['country'].nil?
       end
 
-      def rating_kinopoisk_positiv?(film)
+      def rating_positiv?(film)
         film['rating_kinopoisk'].to_f.positive?
       end
 
-      def only_rating(film)
+      def get_rating(film)
         film['rating_kinopoisk'].to_f
       end
     end

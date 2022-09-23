@@ -9,14 +9,11 @@ module Exercise
       end
 
       def search(array, query, left = 0, right = array.size - 1)
-        return -1 if left > right
+        return -1 if array.empty? ||  query < array[0] || query > array[right]
 
         mid = (left + ((right - left) / 2)).to_i
-        if array[mid] != query
-          left, right = array[mid] < query ? [mid + 1, right] : [left, mid - 1]
-          return search(array, query, left, right)
-        end
-        mid
+        left, right = array[mid] < query ? [mid + 1, right] : [left, mid - 1] if array[mid] != query
+        array[mid] == query ? (return mid) : (return search(array, query, left, right))
       end
     end
   end

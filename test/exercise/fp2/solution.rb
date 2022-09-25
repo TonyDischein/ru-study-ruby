@@ -3,12 +3,12 @@ module Exercise
     class MyArray < Array
       # Использовать стандартные функции массива для решения задач нельзя.
       # Использовать свои написанные функции для реализации следующих - можно.
-
+      FIRST = 1
       # Написать свою функцию my_each
-      def my_each(item = 0, &func)
-        unless self[item].nil?
-          yield(self[item])
-          my_each(item + 1, &func)
+      def my_each(arr = self, &func)
+        unless arr.empty?
+          yield arr.first
+          my_each(arr.drop(FIRST), &func)
         end
         self
       end
@@ -20,23 +20,14 @@ module Exercise
 
       # Написать свою функцию my_compact
       def my_compact
-        reduce(self.class.new) { |acc, current| current.nil? ? acc : acc << current }
+        my_reduce(self.class.new) { |acc, current| current.nil? ? acc : acc << current }
       end
 
       # Написать свою функцию my_reduce
-      def my_reduce(*args, &func)
-        if args.count.zero?
-          acc = self[0]
-          col = slice(1..length)
-        else
-          acc, col = args
-          col = self if col.nil?
-        end
+      def my_reduce(accumulator = nil, &sumator)
+        return accumulator if empty?
 
-        head, *tail = col
-        return acc if head.nil?
-
-        my_reduce(func.call(acc, head), tail, &func)
+        self.class.new(drop(FIRST)).my_reduce(accumulator ? sumator.call(accumulator, first) : first, &sumator)
       end
     end
   end

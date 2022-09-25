@@ -3,13 +3,11 @@ module Exercise
     class MyArray < Array
       # Использовать стандартные функции массива для решения задач нельзя.
       # Использовать свои написанные функции для реализации следующих - можно.
-      FIRST = 1
+
       # Написать свою функцию my_each
-      def my_each(arr = self, &func)
-        unless arr.empty?
-          yield arr.first
-          my_each(arr.drop(FIRST), &func)
-        end
+      def my_each(&func)
+        yield first
+        self.class.new(drop(1)).my_each(&func) if count > 1
         self
       end
 
@@ -27,7 +25,7 @@ module Exercise
       def my_reduce(accumulator = nil, &sumator)
         return accumulator if empty?
 
-        self.class.new(drop(FIRST)).my_reduce(accumulator ? sumator.call(accumulator, first) : first, &sumator)
+        self.class.new(drop(1)).my_reduce(accumulator ? sumator.call(accumulator, first) : first, &sumator)
       end
     end
   end
